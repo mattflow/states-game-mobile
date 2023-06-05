@@ -1,6 +1,6 @@
 import { Pressable, SafeAreaView, ScrollView, Text } from "react-native";
-import { stateAbbreviationNameMap, stateAbbreviationSet } from "./lib/states";
-import useSet from "./lib/use-set";
+import { stateAbbreviationNameMap, stateAbbreviationSet } from "../lib/states";
+import useSet from "../lib/use-set";
 import { titleCase } from "title-case";
 
 export default function App() {
