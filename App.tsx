@@ -1,20 +1,36 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, SafeAreaView, ScrollView, Text } from "react-native";
+import { stateAbbreviationNameMap, stateAbbreviationSet } from "./lib/states";
+import useSet from "./lib/use-set";
+import { titleCase } from "title-case";
 
 export default function App() {
+  const [guessed, { has: guessedHas, add: guessedAdd, reset: guessedReset }] =
+    useSet<string>();
+  const remaining = [...stateAbbreviationSet].filter(
+    (abbreviation) => !guessedHas(abbreviation)
+  );
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <Text>{guessed.size}</Text>
+        {remaining.map((abbreviation) => (
+          <Pressable
+            key={abbreviation}
+            onPress={() => guessedAdd(abbreviation)}
+          >
+            <Text>
+              {titleCase(
+                (
+                  stateAbbreviationNameMap.get(abbreviation) as string
+                ).toLowerCase()
+              )}
+            </Text>
+          </Pressable>
+        ))}
+        <Pressable onPress={guessedReset}>
+          <Text>RESET</Text>
+        </Pressable>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
