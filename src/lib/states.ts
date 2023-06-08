@@ -14,3 +14,7 @@ export const stateAbbreviationDimensionMap = new Map(
 
 export const stateNameSet = new Set(stateNameAbbreviationMap.keys());
 export const stateAbbreviationSet = new Set(stateAbbreviationNameMap.keys());
+
+export function isState(anyString: string) {
+  return stateAbbreviationSet.has(anyString) || stateNameSet.has(anyString);
+}
